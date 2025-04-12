@@ -1,0 +1,12 @@
+numpy
+pandas
+matplotlib
+scikit-learn
+opencv-python
+tensorflow
+keras
+jupyter
+opencv-python
+keras.utils
+flask_cors
+tensorflow.keras.models

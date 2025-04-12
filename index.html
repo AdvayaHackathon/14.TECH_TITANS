@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Tech Titans - Skin Disease Detection</title>
+    <style>
+        body {
+            margin: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f0f4f8;
+            color: #333;
+        }
+
+        header {
+            background-color: #00695c;
+            color: white;
+            padding: 1.5rem;
+            text-align: center;
+        }
+
+        nav {
+            background-color: #004d40;
+            text-align: center;
+            padding: 0.8rem;
+        }
+
+        nav a {
+            color: white;
+            margin: 0 20px;
+            text-decoration: none;
+            font-weight: bold;
+        }
+
+        nav a:hover {
+            text-decoration: underline;
+        }
+
+        main {
+            padding: 2rem;
+            max-width: 1000px;
+            margin: auto;
+        }
+
+        section {
+            margin-bottom: 3rem;
+        }
+
+        section img {
+            max-width: 100%;
+            height: auto;
+            border-radius: 8px;
+        }
+
+        footer {
+            background-color: #004d40;
+            color: white;
+            text-align: center;
+            padding: 1rem;
+            margin-top: 2rem;
+        }
+
+        .btn {
+            display: inline-block;
+            background-color: #00796b;
+            color: white;
+            padding: 0.75rem 1.5rem;
+            border: none;
+            border-radius: 5px;
+            text-decoration: none;
+            margin-top: 1rem;
+        }
+
+        .btn:hover {
+            background-color: #004d40;
+        }
+    </style>
+</head>
+
+<body>
+    <header>
+        <h1>Tech Titans</h1>
+        <p>AI-powered Skin Disease Detection System</p>
+    </header>
+
+    <nav>
+        <a href="#home">Home</a>
+        <a href="#about">About</a>
+        <a href="#services">Services</a>
+        <a href="#contact">Contact</a>
+    </nav>
+
+    <main>
+        <section id="home">
+            <h2>Welcome to Tech Titans</h2>
+            <p>We leverage advanced AI technology to assist in early detection of skin diseases through medical imaging.
+                Ensure timely diagnosis and better health outcomes with our innovative solution.</p>
+            <a href="#services" class="btn">Learn More</a>
+        </section>
+
+        <section id="about">
+            <h2>About Us</h2>
+            <p>Tech Titans is a passionate team of tech enthusiasts dedicated to revolutionizing healthcare through
+                artificial intelligence. Our mission is to make skin disease detection faster, more accessible, and
+                highly accurate for everyone.</p>
+        </section>
+
+        <section id="services">
+            <h2>Our Services</h2>
+            <p>Upload medical images and let our AI analyze them for potential skin diseases. Our system supports
+                multiple conditions and provides detailed diagnostic insights.</p>
+
+            <form action="/upload" method="POST" enctype="multipart/form-data">
+                <input type="file" name="image" accept="image/*" required>
+                <button type="submit" class="btn">Upload Image</button>
+            </form>
+        </section>
+
+
+        <section id="contact">
+            <h2>Contact Us</h2>
+            <p>Have questions or need support? Reach out to us:</p>
+            <p>Email: support@techtianhealth.com</p>
+            <p>Phone: +1 234 567 890</p>
+        </section>
+    </main>
+
+    <footer>
+        <p>&copy; 2025 Tech Titans. All rights reserved.</p>
+    </footer>
+
+    <p id="result"></p> <!-- Add this where you want to show prediction -->
+
+    <script>
+        document.querySelector('form').addEventListener('submit', async function (e) {
+            e.preventDefault(); // Prevent normal form submission
+
+            const formData = new FormData(this);
+
+            try {
+                const response = await fetch('http://127.0.0.1:5000/upload', {
+                    method: 'POST',
+                    body: formData
+                });
+
+                const result = await response.json();
+
+                if (result.prediction) {
+                    document.getElementById('result').textContent = 'Prediction: ' + result.prediction;
+                } else if (result.error) {
+                    document.getElementById('result').textContent = 'Error: ' + result.error;
+                }
+
+            } catch (error) {
+                console.error('Error:', error);
+                document.getElementById('result').textContent = 'An error occurred. Please try again.';
+            }
+        });
+    </script>
+
+</body>
+
+</html>
